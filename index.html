@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" type="image/x-icon" href="./img/x-icon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="./css/styles.css">
+  <title>Cambio Bahia</title>
+</head>
+<body>
+  <!-- header con nav -->
+  <header>
+    <nav>
+      <ul  class="section">
+        <section class="section-img">
+        <img src="./img/cambioBahia.png" alt="Logo Empresa">
+        </section>
+        <section class="section-list">
+        <li><a href="">INICIO</a></li>
+        <li><a href="">ACERCA DE NOSOTROS</a></li>
+        <li><a href="">PREGUNTAS FRECUENTES</a></li>
+        <li><a href="">CONTACTO</a></li>
+      </ul>
+      <div class="section-div">
+        <h1> Cambio Bahia</h1>
+        <section>
+          <div>Agencia de cambio habilitada por el BCRA N°20.022</div>
+        </section>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <form class="form">
+      <p>Seleccionar la moneda a cambiar</p>
+      <input type="radio" name="cambio" id="uno">Dolar
+      <input type="radio" name="cambio" id="dos">Euro
+      <p>Ingrese el monto</p>
+      <input type="number" id="valor" min="1" max="100000">
+      <input type="button" id="cotizador" value="Cotizar" onclick="">
+    </form>
+    <footer class="footer">
+      <div>
+        <p>Redes Sociales</p>
+        <ul>
+          <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+          <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+        </ul>
+      </div>
+      <div class="footer-img">
+        <img src="./img/cambioBahia.png" alt="logo-empresa">
+      </div>
+    </footer>
+  </main>
+  <script src="./index.js"></script>
+</body>
+</html>

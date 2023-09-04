@@ -1,0 +1,37 @@
+*{
+  padding: 0;
+  box-sizing: border-box;
+}
+ul , li, a{
+  text-decoration: none;
+  list-style: none;
+}
+
+.form{
+  border: 1px solid black;
+  text-align: center;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  background-color: #f5a623;
+  margin-top: .5rem;
+}
+
+#cotizador{
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#valor{
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body{
+  background-color: cadetblue;
+}

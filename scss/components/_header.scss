@@ -1,0 +1,21 @@
+.section{
+    border-radius: 0.35em;
+    box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 255, 0.25);
+    background-color: rgba(120,120,120,0.77);
+    padding: 0 1.5em 0 1.5em;
+    &-img{
+      text-align: center;
+      & img{
+        width: 30%;
+      }
+    }
+    &-div{
+      width: 100%;
+      text-align: center;
+      & h1{
+        display: none;
+      }
+  }
+}
+
+

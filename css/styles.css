@@ -1,0 +1,110 @@
+* {
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul, li, a {
+  text-decoration: none;
+  list-style: none;
+}
+
+.form {
+  border: 1px solid black;
+  text-align: center;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  background-color: #f5a623;
+  margin-top: 0.5rem;
+}
+
+#cotizador {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#valor {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body {
+  background-color: cadetblue;
+}
+
+.section {
+  border-radius: 0.35em;
+  box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 255, 0.25);
+  background-color: rgba(120, 120, 120, 0.77);
+  padding: 0 1.5em 0 1.5em;
+}
+.section-img {
+  text-align: center;
+}
+.section-img img {
+  width: 30%;
+}
+.section-div {
+  width: 100%;
+  text-align: center;
+}
+.section-div h1 {
+  display: none;
+}
+
+.section-list {
+  text-align: center;
+}
+.section-list li {
+  display: inline-block;
+  padding: 0 1.4em 0 1.4em;
+}
+.section-list li a {
+  display: block;
+  color: #eee;
+  color: rgba(255, 255, 255, 0.75);
+  text-transform: uppercase;
+  font-size: 0.7em;
+  letter-spacing: 0.25em;
+  height: 5em;
+  line-height: 5em;
+}
+
+.footer {
+  margin-top: 0.4em;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: space-evenly;
+  box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 255, 0.25);
+  background-color: rgba(120, 120, 120, 0.77);
+  gap: 0.3rem;
+}
+.footer-img img {
+  width: 30%;
+}
+.footer p {
+  margin: 0;
+  font-size: 1.2em;
+}
+.footer div ul {
+  display: inline-flex;
+}
+.footer .fab {
+  color: #e4405f; /* Color de Instagram */
+  font-size: xx-large;
+  margin-left: 0.5em;
+}
+.footer .fab.fa-facebook {
+  color: #1877f2; /* Color de Facebook */
+  font-size: xx-large;
+}
+
+/*# sourceMappingURL=styles.css.map */
