@@ -20,6 +20,9 @@ ul, li, a {
   background-color: #f5a623;
   margin-top: 0.5rem;
 }
+.form>p{
+  font-size: 15px;
+}
 
 #cotizador {
   width: 50%;
@@ -107,4 +110,137 @@ body {
   font-size: xx-large;
 }
 
-/*# sourceMappingURL=styles.css.map */
+/* Formulario */
+h2 {
+  text-align: center;
+  padding: 20px;
+  font-size: 2em;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color:#f5a623 ;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.campo {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.botones {
+  text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+button:last-child {
+  background-color: #ccc;
+  color: #333;
+}
+
+/* Acerca de nosotros */
+#acerca {
+  background-color: orange; /* Fondo naranja */
+  padding: 40px; /* Espaciado interior para separar el contenido del borde */
+  margin-top: 15px;
+}
+
+.acerca-container {
+  background-color: white; /* Fondo blanco para el contenido */
+  border-radius: 10px; /* Bordes redondeados para el contenedor */
+  padding: 20px; /* Espaciado interior para separar el contenido del borde del contenedor */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra para que parezca que flota */
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+h2, p {
+  margin: 0; /* Eliminar márgenes predeterminados */
+}
+
+h2 {
+  color:#f5a623; /* Color de texto naranja para el encabezado */
+  font-size: 24px; /* Tamaño de fuente para el encabezado */
+  margin-bottom: 20px; /* Espaciado inferior para separar del párrafo siguiente */
+}
+
+p {
+  font-size: 22px; /* Tamaño de fuente para los párrafos */
+  line-height: 1.5; /* Espaciado entre líneas para una mejor legibilidad */
+  color: #333; /* Color de texto principal (gris oscuro) */
+  text-align: justify; /* Justificar el texto para un aspecto más limpio */
+}
+
+p::first-letter {
+  font-size: 36px; /* Tamaño de fuente para la primera letra */
+  color: orange; /* Color de la primera letra (naranja) */
+  float: left; /* Hacer flotar la primera letra hacia la izquierda */
+  margin-right: 10px; /* Espaciado a la derecha de la primera letra */
+  font-weight: bold; /* Hacer que la primera letra sea negrita */
+  line-height: 1; /* Alineación vertical de la primera letra */
+}
+
+/* Seccion preguntas frecuentes */
+#questions {
+  background-color: orange; /* Fondo naranja */
+  padding: 40px; /* Espaciado interior para separar el contenido del borde */
+}
+
+.questions-container {
+  background-color: white; /* Fondo blanco para el contenido */
+  border-radius: 10px; /* Bordes redondeados para el contenedor */
+  padding: 20px; /* Espaciado interior para separar el contenido del borde del contenedor */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra para que parezca que flota */
+}
+
+h2 {
+  color: orange; /* Color de texto naranja para el encabezado */
+  font-size: 24px; /* Tamaño de fuente para el encabezado */
+  margin-bottom: 20px; /* Espaciado inferior para separar del primer elemento FAQ */
+}
+
+.question-item {
+  margin-bottom: 20px; /* Espaciado inferior entre elementos FAQ */
+}
+
+h3 {
+  font-size: 20px; /* Tamaño de fuente para las preguntas */
+  color: #333; /* Color de texto principal (gris oscuro) para las preguntas */
+}
+
+p {
+  font-size: px; /* Tamaño de fuente para las respuestas */
+  line-height: 1.5; /* Espaciado entre líneas para una mejor legibilidad */
+  color: #333; /* Color de texto principal (gris oscuro) para las respuestas */
+}
