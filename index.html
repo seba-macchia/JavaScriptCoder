@@ -8,6 +8,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
     <link rel="stylesheet" href="./css/styles.css" />
     <title>Cambio Bahia</title>
   </head>
@@ -33,18 +37,67 @@
           </section>
         </div>
       </nav>
+      <section id="login">
+        <h2>Iniciar Sesión</h2>
+        <form id="login-form">
+          <label for="username">Nombre de Usuario:</label>
+          <input type="text" id="username" name="username" required />
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" name="password" required />
+          <button type="submit" id="login-button">Iniciar Sesión</button>
+        </form>
+      </section>
     </header>
     <main>
       <section id="inicio">
-        <form class="form">
-          <p>Seleccionar la moneda a cambiar</p>
-          <input type="radio" name="cambio" id="uno" />Dolar
-          <input type="radio" name="cambio" id="dos" />Euro
-          <p>Ingrese el monto</p>
-          <input type="number" id="valor" min="1" max="100000" />
-          <input type="button" id="cotizador" value="Cotizar" onclick="" />
-        </form>
+        <h2>Cambio de Divisas</h2>
+        <article id="inicio-article"></article>
+        <div id="inicio-buttons">
+          <button id="comprar" onclick="mostrarMonedas('compra')">
+            Comprar
+          </button>
+          <button id="vender" onclick="mostrarMonedas('venta')">Vender</button>
+        </div>
+        <div id="transaccion-form">
+          <h3 id="transaccion-form-h3"></h3>
+          <select id="selector-compra" required>
+            Moneda:
+          </select>
+          <label for="impuesto">Aplicar impuesto</label>
+          <input type="checkbox" id="impuesto" name="impuesto" />
+          <div id="transaccion-form-container">
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad" required />
+            <button id="realizar-transaccion">Realizar Transacción</button>
+          </div>
+        </div>
       </section>
+      <button
+        id="mostrar-transacciones"
+        onclick="mostrarTransacciones('mostrar')"
+      >
+        Mostrar Transacciones
+      </button>
+      <!-- Tabla para mostrar las transacciones -->
+      <table id="transacciones">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Moneda</th>
+            <th>Cantidad</th>
+            <th>Resultado</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aquí se agregarán las filas de transacciones -->
+        </tbody>
+      </table>
+      <button id="borrar-transacciones">
+        Borrar Historial de Transacciones
+      </button>
+
+      <div id="resultado"></div>
       <section id="contacto">
         <h2>Formulario de Contacto</h2>
         <form action="#" method="post">
@@ -70,40 +123,68 @@
           </div>
         </form>
       </section>
+
       <section id="acerca" class="contenido">
         <div class="acerca-container">
           <h2>Acerca de Nosotros</h2>
-          <p>
-            Somos una casa de cambio de divisas ubicada en Bahía Blanca, provincia de Buenos Aires. Con más de 10 años de experiencia en el mercado financiero, nos hemos convertido en un referente en la región.
+          <p class="p">
+            Somos una casa de cambio de divisas ubicada en Bahía Blanca,
+            provincia de Buenos Aires. Con más de 10 años de experiencia en el
+            mercado financiero, nos hemos convertido en un referente en la
+            región.
           </p>
-          <p>
-            Nuestra misión es brindar a nuestros clientes un servicio de calidad y transparencia en todas sus operaciones de cambio de moneda extranjera. Ofrecemos una amplia variedad de divisas, incluyendo dólares estadounidenses, euros, libras esterlinas y muchas más.
+          <p class="p">
+            Nuestra misión es brindar a nuestros clientes un servicio de calidad
+            y transparencia en todas sus operaciones de cambio de moneda
+            extranjera. Ofrecemos una amplia variedad de divisas, incluyendo
+            dólares estadounidenses, euros, libras esterlinas y muchas más.
           </p>
-          <p>
-            Nuestro equipo de expertos en divisas está comprometido en proporcionar tasas competitivas y asesoramiento personalizado para satisfacer las necesidades de cada cliente. Nos enorgullecemos de ofrecer un servicio rápido y seguro en un ambiente amigable y profesional.
+          <p class="p">
+            Nuestro equipo de expertos en divisas está comprometido en
+            proporcionar tasas competitivas y asesoramiento personalizado para
+            satisfacer las necesidades de cada cliente. Nos enorgullecemos de
+            ofrecer un servicio rápido y seguro en un ambiente amigable y
+            profesional.
           </p>
-          <p>
-            Siempre estamos dispuestos a ayudarte con tus necesidades de cambio de divisas y responder a cualquier pregunta que puedas tener. ¡Esperamos verte pronto en nuestra casa de cambio en Bahía Blanca!
+          <p class="p">
+            Siempre estamos dispuestos a ayudarte con tus necesidades de cambio
+            de divisas y responder a cualquier pregunta que puedas tener.
+            ¡Esperamos verte pronto en nuestra casa de cambio en Bahía Blanca!
           </p>
         </div>
       </section>
       <section id="questions" class="contenido">
         <div class="questions-container">
           <h2>Preguntas Frecuentes</h2>
-      
+
           <div class="question-item">
             <h3>¿Cuáles son sus tasas de cambio?</h3>
-            <p>Nuestras tasas de cambio varían según las divisas y las condiciones del mercado. Siempre ofrecemos tasas competitivas y actualizadas. Puede consultar nuestras tasas en línea o visitarnos en nuestra oficina.</p>
+            <p class="p">
+              Nuestras tasas de cambio varían según las divisas y las
+              condiciones del mercado. Siempre ofrecemos tasas competitivas y
+              actualizadas. Puede consultar nuestras tasas en línea o visitarnos
+              en nuestra oficina.
+            </p>
           </div>
-      
+
           <div class="question-item">
             <h3>¿Qué tipos de divisas ofrecen?</h3>
-            <p>Ofrecemos una amplia variedad de divisas, incluyendo dólares estadounidenses, euros, libras esterlinas, y muchas más. Si tienes una pregunta específica sobre una divisa, no dudes en contactarnos.</p>
+            <p class="p">
+              Ofrecemos una amplia variedad de divisas, incluyendo dólares
+              estadounidenses, euros, libras esterlinas, y muchas más. Si tienes
+              una pregunta específica sobre una divisa, no dudes en
+              contactarnos.
+            </p>
           </div>
-      
+
           <div class="question-item">
             <h3>¿Cómo puedo realizar una transacción?</h3>
-            <p>Para realizar una transacción, puedes visitarnos en nuestra oficina en Bahía Blanca o contactarnos por teléfono o correo electrónico. Nuestro equipo estará encantado de ayudarte a completar la transacción de manera segura y eficiente.</p>
+            <p class="p">
+              Para realizar una transacción, puedes visitarnos en nuestra
+              oficina en Bahía Blanca o contactarnos por teléfono o correo
+              electrónico. Nuestro equipo estará encantado de ayudarte a
+              completar la transacción de manera segura y eficiente.
+            </p>
           </div>
         </div>
       </section>

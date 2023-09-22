@@ -1,150 +1,253 @@
-// pre entrega 2
-// Defino una clase para representar las transacciones de divisas.
-class Transaccion {
-  constructor(cantidad, monedaOrigen, monedaDestino) {
-    this.cantidad = cantidad;
-    this.monedaOrigen = monedaOrigen;
-    this.monedaDestino = monedaDestino;
-    this.resultado = this.calcularResultado();
-  }
+// Alumno: Macchia Sebastian
 
-  calcularResultado() {
-    const tipoCambioOrigen = this.monedaOrigen === 'ARS' ? 1 : tasasDeCambio[this.monedaOrigen];
-    const tipoCambioDestino = this.monedaDestino === 'ARS' ? 1 : tasasDeCambio[this.monedaDestino];
-    return (this.cantidad * tipoCambioOrigen) / tipoCambioDestino;
-  }
-}
-
-// Defino un objeto para representar las divisas y sus tasas de cambio a pesos argentinos (ARS).
-const tasasDeCambio = {
-  USD: 367,   // Tasa de cambio a pesos argentinos
-  EUR: 400,
-  BRL: 79,
-  GBP: 440,
+// Tasas de cambio para compra y venta de divisas
+const tasasDeCambioCompra = {
+  USD: 347.5, // Tasa de cambio a pesos argentinos
+  EUR: 373.05,
+  BRL: 71.69,
+  GBP: 432,
   CNY: 48.18,
 };
 
-// Total inicial en pesos argentinos (ARS).
-let dineroDisponible = 0;
-
-// Función de orden superior para mostrar un menú de opciones al usuario.
-function mostrarMenu() {
-  let salir = false; // Variable para controlar la salida del bucle while
-
-  while (!salir) {
-    const opcionesMenu = [
-      'Comprar divisas',
-      'Vender divisas',
-      'Salir',
-    ];
-
-    const eleccion = prompt(`Elija una opción:\n1. Comprar divisas\n2. Vender divisas\n3. Salir\n\nDinero disponible: ${dineroDisponible.toFixed(2)} ARS`);
-
-    switch (eleccion) {
-      case '1':
-        comprarDivisas();
-        break;
-      case '2':
-        venderDivisas();
-        break;
-      case '3':
-        salir = true; // pongo la variable salir en true para salir del bucle.
-        break;
-      default:
-        alert('Opción no válida. Por favor, seleccione una opción válida.');
-        break;
-    }
-  }
+const tasasDeCambioVenta = {
+  USD: 365.5, // Tasa de cambio venta a pesos argentinos
+  EUR: 373.21,
+  BRL: 71.74,
+  GBP: 440,
+  CNY: 48.40,
 }
 
-// Función para calcular impuestos (30%).
-function calcularImpuestos(total) {
-  return total * 0.3;
-}
+// Obtener referencias a los elementos HTML
+const loginForm = document.getElementById("login-form");
+const usernameInput = document.getElementById("username");
+const passwordInput = document.getElementById("password");
+const transaccionForm = document.getElementById("transaccion-form");
+const comprarButton = document.getElementById("comprar");
+const venderButton = document.getElementById("vender");
+const borrarTransaccionesButton = document.getElementById("borrar-transacciones");
+const historialTransacciones = document.getElementById("transacciones");
 
-// Función para listar las divisas y sus tasas de cambio.
-function listarDivisas() {
-  const mensaje = 'Tasas de cambio a pesos argentinos (ARS):\n' +
-    Object.entries(tasasDeCambio).map(([moneda, tasa]) => `${moneda}: ${tasa.toFixed(2)} ARS`).join('\n') +
-    '\n\nNota: Los importes mostrados no incluyen el 30% de impuestos.';
-  alert(mensaje);
-}
+// Ocultar botones y elementos al inicio
+comprarButton.style.display = "none";
+venderButton.style.display = "none";
+borrarTransaccionesButton.style.display = "none";
+historialTransacciones.style.display = "none";
 
-// Función y condicionales para comprar divisas.
-function comprarDivisas() {
-  const opcionIngreso = prompt('¿Desea ingresar dinero? (Sí o No):');
+// Función para manejar el inicio de sesión
+function iniciarSesion(event) {
+  event.preventDefault(); // Evita que el formulario se envíe
+  const login = document.getElementById("login");
 
-  if (opcionIngreso.toLowerCase() === 'si') {
-    const dineroIngresado = parseFloat(prompt('Ingrese la cantidad de dinero en pesos argentinos (ARS):'));
-    if (isNaN(dineroIngresado) || dineroIngresado < 0) {
-      alert('Cantidad de dinero no válida. La transacción no puede ser realizada.');
-      return;
-    }
+  const username = usernameInput.value;
+  const password = passwordInput.value;
 
-    dineroDisponible += dineroIngresado; // Actualiza el saldo con el dinero ingresado.
+  // Verificar credenciales 
+  if (username === "pedro" && password === "pedro123") {
+    // Almacenar el usuario en el localStorage
+    localStorage.setItem("usuario", username);
+    localStorage.setItem("password", password);
 
-    const mensaje = `Dinero disponible: ${dineroDisponible.toFixed(2)} ARS\nSeleccione la divisa que desea comprar (por número):\n` +
-      Object.keys(tasasDeCambio).map((moneda, index) => `${index + 1}. ${moneda}`).join('\n');
-      
-    const eleccionDivisa = parseInt(prompt(mensaje));
+    // Ocultar el formulario de inicio de sesión y mostrar mensaje de bienvenida
+    loginForm.style.display = "none";
+    let bienvenido = document.createElement("h2");
+    bienvenido.innerHTML = `Bienvenido ${username}`;
+    login.innerHTML = "";
+    let button = document.createElement("button");
+    button.style.backgroundColor = "#007bff";
+    button.style.color = "#fff";
+    button.style.marginLeft = "45%";
+    button.style.marginRight = "45%";
+    button.innerHTML = "Cerrar sesión";
+    button.addEventListener("click", function () {
+      cerrarSesion();
+    });
+    login.appendChild(bienvenido);
+    login.appendChild(button);
 
-    if (isNaN(eleccionDivisa) || eleccionDivisa < 1 || eleccionDivisa > Object.keys(tasasDeCambio).length) {
-      alert('Opción no válida. Por favor, seleccione una opción válida.');
-      return;
-    }
-
-    const simboloMoneda = Object.keys(tasasDeCambio)[eleccionDivisa - 1];
-    const cantidadDivisas = parseFloat(prompt(`Ingrese la cantidad de ${simboloMoneda} que desea comprar:`));
-
-    if (isNaN(cantidadDivisas) || cantidadDivisas <= 0) {
-      alert('Cantidad no válida. La transacción no puede ser realizada.');
-      return;
-    }
-
-    const tasaCambio = tasasDeCambio[simboloMoneda];
-    const costoTransaccion = cantidadDivisas * tasaCambio;
-    const impuestos = calcularImpuestos(costoTransaccion);
-    const costoTotal = costoTransaccion + impuestos;
-
-    if (dineroDisponible < costoTotal) {
-      const divisasPuedesComprar = ((dineroDisponible * 0.7) / tasaCambio).toFixed(2); // Se multiplica por 0.7 para restar el 30% de impuestos.
-      alert(`Dinero insuficiente. Puedes comprar hasta ${divisasPuedesComprar} ${simboloMoneda} (con impuestos incluidos).`);
-    } else {
-      dineroDisponible -= costoTotal; // Actualiza el saldo restando el costo total de la transacción.
-      alert(`Transacción exitosa:\nDinero disponible: ${dineroDisponible.toFixed(2)} ARS\n${cantidadDivisas} ${simboloMoneda} => ${costoTransaccion.toFixed(2)} ARS\nImpuestos (30%): ${impuestos.toFixed(2)} ARS\nCosto total: ${costoTotal.toFixed(2)} ARS`);
-    }
-  } else if (opcionIngreso.toLowerCase() === 'no') {
-    listarDivisas();
+    // Mostrar la sección de inicio con los botones "Comprar" y "Vender"
+    comprarButton.style.display = "block";
+    venderButton.style.display = "block";   
   } else {
-    alert('Opción no válida. Por favor, seleccione "Sí" o "No".');
+    alert("Credenciales incorrectas");
+  }
+  usernameInput.value = "";
+  passwordInput.value = "";
+}
+
+// Agregar un manejador de eventos al formulario de inicio de sesión
+loginForm.addEventListener("submit", iniciarSesion);
+
+// Mostrar el formulario de inicio de sesión cuando se carga la página
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("login").style.display = "block";
+});
+
+// Función para mostrar divisas
+function mostrarDivisas(){
+  const divisas = document.getElementById("inicio-article");
+  let compra = document.createElement("div");
+  let compraTitulo = document.createElement("h3");
+  compraTitulo.innerHTML = "Tasas de compra";
+  compra.appendChild(compraTitulo);
+  let venta = document.createElement("div");
+  let ventaTitulo = document.createElement("h3");
+  ventaTitulo.innerHTML = "Tasas de venta";
+  venta.appendChild(ventaTitulo);
+  for (let moneda in tasasDeCambioCompra) {
+    const divisa = document.createElement("p");
+    divisa.innerHTML = `${moneda}: ${tasasDeCambioCompra[moneda]} ARS`;
+    compra.appendChild(divisa);
+  }
+  for (let moneda in tasasDeCambioVenta) {
+    const divisa = document.createElement("p");
+    divisa.innerHTML = `${moneda}: ${tasasDeCambioVenta[moneda]} ARS`;
+    venta.appendChild(divisa);
+  }
+  divisas.appendChild(compra);
+  divisas.appendChild(venta);
+}
+
+// Función para mostrar las transacciones del usuario
+function mostrarTransacciones(valor) {
+  if (localStorage.getItem("usuario") === null) {
+    alert("Debes iniciar sesión primero");
+  }
+  else {
+    if (valor != "actualizar") {
+      if (historialTransacciones.style.display === "block") {
+        historialTransacciones.style.display = "none";
+      } else {
+        historialTransacciones.style.display = "block";
+      }
+      if (borrarTransaccionesButton.style.display === "block") {
+        borrarTransaccionesButton.style.display = "none";
+      } else {
+        borrarTransaccionesButton.style.display = "block";
+      }
+    } else {
+      if (historialTransacciones.style.display === "none"){
+        historialTransacciones.style.display = "block";
+      }
+      if (borrarTransaccionesButton.style.display === "none"){
+        borrarTransaccionesButton.style.display = "block";
+      }
+    }
+    const transaccionesGuardadas =
+      JSON.parse(localStorage.getItem("transacciones")) || [];
+    const tbody = document.querySelector("#transacciones tbody");
+
+    // Limpia la tabla antes de agregar las nuevas transacciones
+    tbody.innerHTML = "";
+
+    // Itera sobre las transacciones guardadas y agrega filas a la tabla
+    transaccionesGuardadas.forEach((transaccion) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>   ${transaccion.tipo} </td>
+        <td>   ${transaccion.moneda} </td>
+        <td>   ${transaccion.cantidad} </td>
+        <td>   ${transaccion.resultado} ARS  </td>
+        <td>    ${transaccion.fecha}  </td>
+      `;
+      tbody.appendChild(row);
+    });
   }
 }
 
-// Función para vender divisas.
-function venderDivisas() {
-  const mensaje = `Seleccione la divisa que desea vender (por número):\n` + 
-    Object.keys(tasasDeCambio).map((moneda, index) => `${index + 1}. ${moneda}`).join('\n');
+// Función para realizar una transacción (compra o venta)
+function transaccion(moneda, opcion) {
+  const cantidad = parseFloat(document.getElementById("cantidad").value);
+  const aplicarImpuesto = document.getElementById("impuesto").checked;
 
-  const eleccionDivisa = parseInt(prompt(mensaje));
-
-  if (isNaN(eleccionDivisa) || eleccionDivisa < 1 || eleccionDivisa > Object.keys(tasasDeCambio).length) {
-    alert('Opción no válida. Por favor, seleccione una opción válida.');
+  if (!tasasDeCambioCompra.hasOwnProperty(moneda) || !tasasDeCambioVenta.hasOwnProperty(moneda)) {
+    alert("Moneda no válida.");
     return;
   }
-
-  const simboloMoneda = Object.keys(tasasDeCambio)[eleccionDivisa - 1];
-  const cantidad = parseFloat(prompt(`Ingrese la cantidad de ${simboloMoneda} que desea vender:`));
 
   if (isNaN(cantidad) || cantidad <= 0) {
-    alert('Cantidad no válida. La transacción no puede ser realizada.');
+    alert("Cantidad no válida.");
     return;
   }
 
-  const tasaCambio = tasasDeCambio[simboloMoneda];
-  const resultado = cantidad * tasaCambio;
-  const mensajeVenta = `Simulación de venta:\nCantidad de ${simboloMoneda} a vender: ${cantidad}\nPrecio de ${simboloMoneda}: ${tasaCambio.toFixed(2)} ARS\nResultado en pesos argentinos (ARS): ${resultado.toFixed(2)} ARS\n\nNota: Los importes mostrados no incluyen el 30% de impuestos. \n\nSi desea realizar esta operación, por favor diríjase a la sucursal más cercana.`;
-  alert(mensajeVenta);
+  let resultado = 0;
+
+  if (opcion === "compra") {
+    resultado = cantidad * tasasDeCambioCompra[moneda];
+  } else if (opcion === "venta") {
+    resultado = tasasDeCambioVenta[moneda] * cantidad;
+  }
+
+  if (aplicarImpuesto) {
+    // Calcula el impuesto y agrega al resultado
+    const impuesto = resultado * 0.3; // Cambia el 0.3 al porcentaje de impuesto que desees aplicar
+    resultado += impuesto;
+  }
+
+  // Almacena la transacción en el localStorage
+  const transaccion = {
+    tipo: opcion,
+    moneda: moneda,
+    cantidad: cantidad,
+    resultado: resultado.toFixed(2),
+    fecha: new Date().toLocaleDateString(),
+  };
+
+  transaccionesGuardadas =
+    JSON.parse(localStorage.getItem("transacciones")) || [];
+  transaccionesGuardadas.push(transaccion);
+  localStorage.setItem(
+    "transacciones",
+    JSON.stringify(transaccionesGuardadas)
+  );
+  // Ocultar el formulario de transacción nuevamente
+  transaccionForm.style.display = "none";
+
+  // Llama a la función para mostrar las transacciones actualizadas
+  mostrarTransacciones("actualizar");
 }
 
-// Iniciar la aplicación mostrando el menú principal.
-mostrarMenu();
+// Función para mostrar las opciones de compra y venta de divisas
+function mostrarMonedas(opcion) {
+  const moneda = document.getElementById("selector-compra");
+  moneda.innerHTML = "";
+  const cantidad = document.getElementById("cantidad");
+  cantidad.value = "";
+  let h3 = document.getElementById("transaccion-form-h3");
+  h3.innerHTML = "";
+  
+  if (opcion === "compra") {
+    h3.innerHTML = "Compra de divisas";
+  } else if (opcion === "venta") {
+    h3.innerHTML = "Venta de divisas";
+  }
+  for (elemento in tasasDeCambioCompra || tasasDeCambioVenta) {
+    let valor = document.createElement("option");
+    valor.value = elemento;
+    valor.innerHTML = elemento;
+    moneda.appendChild(valor);
+  }
+  // Mostrar el formulario de transacción
+  transaccionForm.style.display = "block";
+  document.getElementById("realizar-transaccion").onclick = function () {
+    transaccion(moneda.value, opcion);
+  }
+}
+
+// Llama a la función para mostrar las tasas de cambio al cargar la página
+mostrarDivisas();
+
+// Agregar un manejador de eventos para el botón de borrar transacciones
+borrarTransaccionesButton.addEventListener("click", function() {
+  const confirmacion = confirm("¿Estás seguro de que deseas borrar el historial de transacciones?");
+
+  if (confirmacion) {
+    localStorage.removeItem("transacciones");
+    mostrarTransacciones(); // Actualiza la tabla de transacciones
+  }
+});
+
+// Función para cerrar la sesión
+function cerrarSesion() {
+  localStorage.clear();
+  location.reload();
+}
