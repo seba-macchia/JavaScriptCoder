@@ -1,20 +1,18 @@
 // Alumno: Macchia Sebastian
+let tasasDeCambioCompra = {};
+let tasasDeCambioVenta = {};
 
-// Tasas de cambio para compra y venta de divisas
-const tasasDeCambioCompra = {
-  USD: 347.5, // Tasa de cambio a pesos argentinos
-  EUR: 373.05,
-  BRL: 71.69,
-  GBP: 432,
-  CNY: 48.18,
-};
+try{
+  fetch("./tasas.json")
+  .then((res) => res.json())
+  .then((data) => {
+    tasasDeCambioCompra = data.cambioCompra;
+    tasasDeCambioVenta = data.cambioVenta;
 
-const tasasDeCambioVenta = {
-  USD: 365.5, // Tasa de cambio venta a pesos argentinos
-  EUR: 373.21,
-  BRL: 71.74,
-  GBP: 440,
-  CNY: 48.40,
+    mostrarDivisas();
+  });
+}catch(error){
+  console.log(error);
 }
 
 // Obtener referencias a los elementos HTML
@@ -26,12 +24,15 @@ const comprarButton = document.getElementById("comprar");
 const venderButton = document.getElementById("vender");
 const borrarTransaccionesButton = document.getElementById("borrar-transacciones");
 const historialTransacciones = document.getElementById("transacciones");
+const botonTransacciones = document.getElementById("mostrar-transacciones");
 
 // Ocultar botones y elementos al inicio
 comprarButton.style.display = "none";
 venderButton.style.display = "none";
 borrarTransaccionesButton.style.display = "none";
 historialTransacciones.style.display = "none";
+botonTransacciones.style.display = "none";
+
 
 // Función para manejar el inicio de sesión
 function iniciarSesion(event) {
@@ -55,8 +56,8 @@ function iniciarSesion(event) {
     let button = document.createElement("button");
     button.style.backgroundColor = "#007bff";
     button.style.color = "#fff";
-    button.style.marginLeft = "45%";
-    button.style.marginRight = "45%";
+    button.style.marginLeft = "40%";
+    button.style.marginRight = "40%";
     button.innerHTML = "Cerrar sesión";
     button.addEventListener("click", function () {
       cerrarSesion();
@@ -64,11 +65,12 @@ function iniciarSesion(event) {
     login.appendChild(bienvenido);
     login.appendChild(button);
 
-    // Mostrar la sección de inicio con los botones "Comprar" y "Vender"
+    // Mostrar la sección de inicio con los botones "Comprar", "Vender" y "botonTransacciones"
     comprarButton.style.display = "block";
     venderButton.style.display = "block";   
+    botonTransacciones.style.display = "block";
   } else {
-    alert("Credenciales incorrectas");
+    Swal.fire("Credenciales incorrectas");
   }
   usernameInput.value = "";
   passwordInput.value = "";
@@ -110,7 +112,7 @@ function mostrarDivisas(){
 // Función para mostrar las transacciones del usuario
 function mostrarTransacciones(valor) {
   if (localStorage.getItem("usuario") === null) {
-    alert("Debes iniciar sesión primero");
+    Swal.fire("Debes iniciar sesión primero");
   }
   else {
     if (valor != "actualizar") {
@@ -160,12 +162,12 @@ function transaccion(moneda, opcion) {
   const aplicarImpuesto = document.getElementById("impuesto").checked;
 
   if (!tasasDeCambioCompra.hasOwnProperty(moneda) || !tasasDeCambioVenta.hasOwnProperty(moneda)) {
-    alert("Moneda no válida.");
+    Swal.fire("Moneda no válida.");
     return;
   }
 
   if (isNaN(cantidad) || cantidad <= 0) {
-    alert("Cantidad no válida.");
+    Swal.fire("Cantidad no válida.");
     return;
   }
 
