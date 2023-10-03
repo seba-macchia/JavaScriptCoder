@@ -41,9 +41,13 @@ function iniciarSesion(event) {
 
   const username = usernameInput.value;
   const password = passwordInput.value;
-
   // Verificar credenciales 
   if (username === "pedro" && password === "pedro123") {
+    usernameInput.innerHTML = "";
+    passwordInput.innerHTML = "";
+    usernameInput.value = "";
+    passwordInput.value = "";
+
     // Almacenar el usuario en el localStorage
     localStorage.setItem("usuario", username);
     localStorage.setItem("password", password);
@@ -56,8 +60,6 @@ function iniciarSesion(event) {
     let button = document.createElement("button");
     button.style.backgroundColor = "#007bff";
     button.style.color = "#fff";
-    button.style.marginLeft = "40%";
-    button.style.marginRight = "40%";
     button.innerHTML = "Cerrar sesión";
     button.addEventListener("click", function () {
       cerrarSesion();
@@ -71,18 +73,16 @@ function iniciarSesion(event) {
     botonTransacciones.style.display = "block";
   } else {
     Swal.fire("Credenciales incorrectas");
+    usernameInput.innerHTML = "";
+    passwordInput.innerHTML = "";
+    usernameInput.value = "";
+    passwordInput.value = "";
   }
-  usernameInput.value = "";
-  passwordInput.value = "";
+
 }
 
 // Agregar un manejador de eventos al formulario de inicio de sesión
 loginForm.addEventListener("submit", iniciarSesion);
-
-// Mostrar el formulario de inicio de sesión cuando se carga la página
-document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("login").style.display = "block";
-});
 
 // Función para mostrar divisas
 function mostrarDivisas(){
@@ -111,10 +111,7 @@ function mostrarDivisas(){
 
 // Función para mostrar las transacciones del usuario
 function mostrarTransacciones(valor) {
-  if (localStorage.getItem("usuario") === null) {
-    Swal.fire("Debes iniciar sesión primero");
-  }
-  else {
+
     if (valor != "actualizar") {
       if (historialTransacciones.style.display === "block") {
         historialTransacciones.style.display = "none";
@@ -141,6 +138,7 @@ function mostrarTransacciones(valor) {
     // Limpia la tabla antes de agregar las nuevas transacciones
     tbody.innerHTML = "";
 
+
     // Itera sobre las transacciones guardadas y agrega filas a la tabla
     transaccionesGuardadas.forEach((transaccion) => {
       const row = document.createElement("tr");
@@ -154,7 +152,7 @@ function mostrarTransacciones(valor) {
       tbody.appendChild(row);
     });
   }
-}
+
 
 // Función para realizar una transacción (compra o venta)
 function transaccion(moneda, opcion) {
@@ -235,21 +233,33 @@ function mostrarMonedas(opcion) {
   }
 }
 
-// Llama a la función para mostrar las tasas de cambio al cargar la página
-mostrarDivisas();
-
 // Agregar un manejador de eventos para el botón de borrar transacciones
 borrarTransaccionesButton.addEventListener("click", function() {
-  const confirmacion = confirm("¿Estás seguro de que deseas borrar el historial de transacciones?");
-
-  if (confirmacion) {
-    localStorage.removeItem("transacciones");
-    mostrarTransacciones(); // Actualiza la tabla de transacciones
-  }
+  Swal.fire({
+    title: "¿Está seguro que desea borrar las transacciones?",
+    text: "Una vez borradas no se podrán recuperar.",
+    icon: "warning",
+    showCancelButton: true, // Agregamos el botón de cancelar
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, borrar",
+    cancelButtonText: "Cancelar"
+  })
+  .then((result) => {
+    if (result.isConfirmed) {
+      localStorage.removeItem("transacciones");
+      mostrarTransacciones(); // Actualiza la tabla de transacciones
+    }
+  });
 });
+
 
 // Función para cerrar la sesión
 function cerrarSesion() {
+  usernameInput.innerHTML = "";
+  passwordInput.innerHTML = "";
+  usernameInput.value = "";
+  passwordInput.value = "";
   localStorage.clear();
   location.reload();
 }
